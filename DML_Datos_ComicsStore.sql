@@ -69,4 +69,3 @@ INSERT INTO Compras (id_cliente, fecha_compra, total) VALUES
 (6, '2024-02-15', 360),
 (8, '2024-02-20', 549),
 (8, '2024-02-21', 549);
-
