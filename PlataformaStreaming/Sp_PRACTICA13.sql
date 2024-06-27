@@ -14,13 +14,18 @@ EXEC sp_insert_usuario @nombre='Marcelina Rosas', @email='marderosas23@gmail.com
 
 CREATE PROCEDURE sp_edit_sus
 @usuario_ID int,
-@tipo nvarchar(50)
+@tipo nvarchar(50),
+@inicio date,
+@fin date
 AS
 BEGIN
-	UPDATE Suscripciones SET Tipo=@tipo WHERE UsuarioID=@usuario_ID
+	UPDATE Suscripciones SET Tipo=@tipo, FechaInicio=@inicio, FechaFin=@fin WHERE UsuarioID=@usuario_ID
 END;
 
-EXEC sp_edit_sus @usuario_ID=8, @tipo='Semestral'
+EXEC sp_edit_sus @usuario_ID=10, @tipo='Mensual', @inicio='2024-06-26', @fin='2024-07-26'
+EXEC sp_edit_sus @usuario_ID=5, @tipo='Semestral', @inicio='2024-06-26', @fin='2024-12-26'
+EXEC sp_edit_sus @usuario_ID=1, @tipo='Mensual', @inicio='2024-06-30', @fin='2024-07-30'
+
 
 CREATE PROCEDURE sp_elim_hv
 @usuario_ID int,
@@ -47,6 +52,8 @@ CREATE PROCEDURE sp_genero_peli
 AS 
 BEGIN
 	SELECT u.Nombre, p.Titulo, p.Genero FROM HistorialVisualizacion h INNER JOIN Peliculas p 
-	ON p.PeliculaID=p.PeliculaID INNER JOIN 
+	ON h.PeliculaID=p.PeliculaID INNER JOIN 
 	Usuarios u ON h.UsuarioID=u.UsuarioID WHERE p.Genero=@genero
 END;
+
+EXEC sp_genero_peli @genero='Drama'
